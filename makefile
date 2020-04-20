@@ -1,10 +1,7 @@
-prog:main.c
-
-
-	gcc main.c vie.c -o prog -lSDL -lSDL_image -lSDL_ttf
-
-prog:maiin.c
-
-
-	gcc maiin.c time.c -o prog -lSDL -lSDL_image -lSDL_ttf
+prog:main.o  score.o 
+	gcc main.o   score.o  -o prog -lSDL -lSDL_image -g
+main.o:main.c
+	gcc -c main.c -lSDL -lSDL_image -g
+score.o:score.c
+	gcc -c score.c -lSDL -lSDL_image -g
 
