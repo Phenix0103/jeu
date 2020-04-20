@@ -1,7 +1,13 @@
-prog:main.o  score.o 
-	gcc main.o   score.o  -o prog -lSDL -lSDL_image -g
+scrolling:main.o scrolling.o Perfect_Collision.o
+	gcc   main.o scrolling.o Perfect_Collision.o -o scrolling -lSDL -lSDL_image 
 main.o:main.c
-	gcc -c main.c -lSDL -lSDL_image -g
-score.o:score.c
-	gcc -c score.c -lSDL -lSDL_image -g
+	gcc -c main.c -g
+
+scrolling.o:scrolling.c
+	gcc -c scrolling.c -g 
+
+Perfect_Collision.o:Perfect_Collision.c
+	gcc -c Perfect_Collision.c -g 
+
+
 
