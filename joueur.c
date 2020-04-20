@@ -1,155 +1,81 @@
+#include <stdio.h>
 #include "SDL/SDL.h"
-#include "joueur.h"
 #include "SDL/SDL_image.h"
+#include"SDL/SDL_ttf.h"
+#include "joueur.h"
 
-void initialiser_perso(personnage *perso)
-{
-perso->sprite=IMG_Load("moiill-ill-droite.png");
-      perso->posSprite.x=0 ;
-      perso->posSprite.y =0; 
 
-      perso->posSprite.w =315; 
-      perso->posSprite.h =181 ;
+void perso_Init(perso *p){
+	p->image = IMG_Load("1.png");
+	p->image2 = IMG_Load("2.png");
+	p->position.x = 200;
+	p->position.y = 350;
+	p->vx = 0; 
+	//p->vy = 0;
+	
+	for (int i = 0; i < 3; i++ ){
+		p->clips[i].x = i*250;
+		p->clips[i].y = 0;
+		p->clips[i].w = 250;
+		p->clips[i].h = 250;
+	}
+	 //(int i = 0; i < 3; i++ ){
+		//p->clips2[i].x = 1536 -(i + 1) * 250;
+		//p->clips2[i].y = 0;
+		//p->clips2[i].w = 250;
+		//p->clips2[i].h = 250;
+	//}
+	
+	p->frame = 0;
+     p->imagperso=IMG_Load("detective.png");
+   /*p->positionperso.x = (ecran -> w / 2) - (p->positionperso-> w / 2);
+     p->positionperso.y = (ecran -> h / 2) - (p->positionperso -> h / 2);*/
+p->positionperso.x = 200;
+	p->positionperso.y = 350;
+}
 
-perso->image=IMG_Load("me11-droite.png");
- perso->posimage.x=0;
- perso->posimage.y=0;
- 
-perso->posimage.w=119;
-perso->posimage.h=213;
-
-perso->nb_vie=3;
-perso->score=0;
-
- perso->direction = RIGHT;
-    perso->etat = IDLE;
-//Variables nécessaires au fonctionnement de la gestion des collisions
-    perso->timerMort = 0;
-    perso->onGround = 0;
- 
-    //Nombre de monstres (à déplacer plus tard dans initialzeGame()
-    jeu.nombreMonstres = 0;
+void affichage(perso *p, SDL_Surface *screen)
+{ 
+    SDL_BlitSurface(p->image, NULL,screen, &p->position);
+     SDL_BlitSurface(p->imagperso, NULL,screen, &p->positionperso);
+        SDL_Flip(screen);//refraichir l ecran
 
 }
 
-void afficher_perso(personnage *perso,SDL_rect posimagette[4], SDL_Surface sprite)
-{
-SDL_BlitSurface(sprite,NULL,ecran,&posSprite);
-SDL_Flip(ecran);
-}
 
+void perso_Render(perso *p, SDL_Surface **screen){
+	if(p->vx >= 0){
+		SDL_BlitSurface(p->image,&p->clips[(int) p->frame],*screen,&p->position);
+	}
+else{
+	SDL_BlitSurface(p->image,&p->clips[(int) p->frame],*screen,&p->position);
+		//SDL_BlitSurface(p->image2,&p->clips2[(int) p->frame],*screen,&p->position);
 
-void deplacer_perso_clavier_droite(personnage *perso)
-{      
-         
+	}
 
-       perso->posSprite.x++;
-} 
-
-void deplacer_perso_clavier_gauche(personnage *perso)
-{  
- 		  
-   perso->posSprite.x--;
-
-}
+	p->frame += 0.15f;
+	if(p->frame > 3) {
+		 p->frame = 1;
+		p->vx *= 1;
+	}
+	p->position.x += p->vx;
 		
-/*void deplacer_perso_clavier_haut(personnage *perso)
-	{		
-
-  perso->posSprite.y--;
 }
-                 
-void deplacer_perso_clavier_bas(personnage *perso)
-	{	
-perso->posSprite.y++;
 
-}*/
-
-
-void setrects(SDL_Rect* clip)
-{
-                clip[0].x =0 ;
-                clip[0].y =0;
-                clip[0].w = 83;
-                clip[0].h =163;
-
-                clip[1].x = 82;
-                clip[1].y = 0;
-                clip[1].w = 80;
-                clip[1].h =163 ;
-
-                clip[2].x =174 ;
-                clip[2].y = 0;
-                clip[2].w = 83;
-                clip[2].h = 163;
-
-                clip[3].x = 256;
-                clip[3].y = 0;
-                clip[3].w = 70;
-                clip[3].h = 163;
+void UpdateEvent(clavier *in){
+    SDL_Event event;
+    while (SDL_PollEvent(&event)){
+        switch (event.type){
+            case SDL_KEYDOWN : // quand on presse 
+                in -> key[event.key.keysym.sym] = 1; // la touche est presse
+                break;
+            case SDL_KEYUP : // quand on depresse
+                in -> key[event.key.keysym.sym] = 0; // la touche n'est pas presse
+                break;
+            default :
+                break;
+        }
+    }
 }
-/*void setrects(SDL_Rect* clip)
-{
-  int c;
-  for( c=0; c<4; c++)
-  {
-                clip[c].x = 0+ c*55;
-                clip[c].y = 0;
-                clip[c].w = 55;
-                clip[c].h = 163;
-
-  }
-}*/
 
 
-int main()
-{
-  const int FPS=20;
-  SDL_Surface *screen;
-  SDL_Surface *perso;
-  SDL_Rect rects[4];
-  SDL_Rect rect;
-/*rect.x= 500;
-rect.y=110 ;
-rect.w=12;
-rect.h= 5;*/
-  int done=1;
-  int frame=0;
-  Uint32 start;
-
-  SDL_Init(SDL_INIT_EVERYTHING);
-  screen=SDL_SetVideoMode(960,500,32,SDL_SWSURFACE);
-	if(screen==NULL)
-	{
-		printf("unable to set video mode :%s\n",SDL_GetError());
-		exit(EXIT_FAILURE);
-	}
-perso=SDL_DisplayFormat(IMG_Load("moiill-illdroite-espacé2.png"));
-SDL_SetColorKey(perso, SDL_SRCCOLORKEY, SDL_MapRGB(perso->format, 255, 255, 255));
-  if(perso==NULL)
-	{
-		printf("unable to load bitamp: %s",SDL_GetError());
-		exit(EXIT_FAILURE);
-	}
-  setrects(rects);
- while(done)
-  {
-    rect.x=200;
-    rect.y=100;
-
-    
-    SDL_BlitSurface(perso,&rects[frame],screen,&rect);
-SDL_Flip(screen);
-
-    start = SDL_GetTicks();
-  
-frame++;
-    if(frame==4)
-      frame=0;
-    if(2000/FPS>(SDL_GetTicks()-start))
-      SDL_Delay(2000/FPS-(SDL_GetTicks()-start));
-  }
-
-SDL_FreeSurface(perso);
-  SDL_Quit();
-}

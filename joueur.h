@@ -1,31 +1,15 @@
+#ifndef JOUEUR_H_INCLUDED
+#define JOUEUR_H_INCLUDED
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
+#include"clavier.h"
+#include"animation.h"
 
-typedef struct 
-{ 
-  SDL_Surface* sprite;
-  SDL_Rect posimagette[4];
 
-SDL_Surface *image;
-SDL_Rect posimage;
-  
-  int nb_vie;
-  int score;
+/*void perso_Init(perso *p);
+void affichage(perso *p, SDL_Surface *screen);
+void perso_Render(perso *p, SDL_Surface **screen);
+void UpdateEvent(clavier *in);*/
 
- /* Variables utiles pour l'animation */
-    int frameNumber, frameTimer;
-    int etat, direction;
-/* Variables utiles pour la gestion des collisions */
-    int onGround, timerMort;
-    float dirX, dirY;
-    int saveX, saveY;
- 
-}personnage;
 
-void initialiser_perso(personnage *perso);
-void afficher_perso(personnage *perso);
-void animate_perso(personnage *perso);
-void deplacer_perso_clavier_droite(personnage *perso);
-//void deplacer_perso_clavier_haut(personnage *perso);
-//void deplacer_perso_clavier_bas(personnage *perso);
-void deplacer_perso_clavier_gauche(personnage *perso)
+#endif
