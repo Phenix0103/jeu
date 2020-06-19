@@ -7,13 +7,18 @@
 
 
 
+	/** 
+ * @file timr.h 
+*/
 
-
-
+/** 
+* @struct time
+* @brief struct for time
+*/
 
 typedef struct Time {
 
-	SDL_Surface *msg;
+	SDL_Surface *msg; /*!< Surface. */
 
 	TTF_Font *font;
 
@@ -28,5 +33,5 @@ typedef struct Time {
 
 void initializerTemps(Time *time);
 
-void afficherTemps(Time *time,SDL_Surface **screen);
+void afficherTemps(Time *time,SDL_Surface *screen);
 

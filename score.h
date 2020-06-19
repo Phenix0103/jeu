@@ -8,13 +8,15 @@
 * @struct score
 * @brief struct for score
 */
-typedef struct score
+typedef struct score //structure de score avec deux champs sdl rect et surface
 {
-SDL_Rect ps;/*!< rectangle. */ 
- SDL_Surface *fond1;/*!< Surface. */ 
+	SDL_Rect ps;/*!< rectangle. */ 
+ 	SDL_Surface *fond1;/*!< Surface. */ 
+	int scores;
 }score;
 void init_score( score *s);
-int afficherscore(score *s,SDL_Surface *screen,int *run  );
+void calcule_score(score *s);
+void afficherscore(score *s,SDL_Surface *screen );
 
 
 

@@ -1,31 +1,26 @@
+/**
+* @file collisionbox.c
+*/
 #include"collisionbox.h"
+/**
+* @brief To initialize the box .
+* @param b the box
+* @param img the image
+* @return Nothing
+*/
 
 
-void Initialisation_Box(Box *b,SDL_Rect pos,SDL_Surface *img)
+
+int collision(SDL_Rect position1,SDL_Rect position2)
 {
-	b->position.x=pos.x;
-	b->position.y=pos.y;
-	b->position.w=pos.w;
-	b->position.h=pos.h;
-	b->Direction=true;
-	b->Collision=false;
-	b->Image=img;
-}
-
-bool collision (Box *b1,Box *b2)
-{
-	if( (b1->position.x > (b2->position.x+b2->position.w)) || (b2->position.x > (b1->position.x + b1->position.w)) || 
-	(b1->position.y > (b2->position.y + b2->position.h)) || (b2->position.y > (b1->position.y + b1->position.h)) )
+	if( (position1.x > (position2.x+position2.w)) || (position2.x > (position1.x + position1.w)) || 
+	(position1.y > (position2.y + position2.h)) || (position2.y > (position1.y + position1.h)) )
 	{
-		return false;
+		return 0;//pas de collision
 	}
 	else
 	{
-		return true;
+		return 1;//colllision
 	}
 }
 
-void Free_Box(Box *b)
-{
-	SDL_FreeSurface(b->Image);
-}

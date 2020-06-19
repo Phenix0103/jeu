@@ -1,25 +1,29 @@
-/** 
- * @file vie.h 
+#ifndef VIE_H_INCLUDED
+#define VIE_H_INCLUDED
+#include<stdio.h>
+#include<stdlib.h>
+#include<SDL/SDL_image.h>
+#include<SDL/SDL_ttf.h>
+#include<SDL/SDL_getenv.h>
+#include<SDL/SDL_mixer.h>
+#include<SDL/SDL.h>
+/**
+* @struct vie
+* @brief struct for vie 
 */
-#ifndef VIE_H_
-#define VIE_H_
-/**  
-     * @struct vie
-     * @brief struct for vie
-*/
+
 typedef struct vie
 {
-	
-	SDL_Rect position;/*!< rectangle. */ 
-	SDL_Surface *fond1;/*!< surface. */ 
-	SDL_Surface *fond2;/*!< surface. */ 
-	SDL_Surface *fond3;/*!< surface. */ 
-	SDL_Surface *fond4;/*!< surface. */ 
-	SDL_Surface *fond5;/*!< surface. */ 
-        SDL_Surface *fond6;/*!< surface. */ 
+	int nb;
+	SDL_Rect position; /*!< Rectangle*/
+	SDL_Surface *fond1; /*!< Surface*/
+	SDL_Surface *fond2; /*!< Surface*/
+	SDL_Surface *fond3; /*!< Surface*/
+	SDL_Surface *fond4; /*!< Surface*/
+	SDL_Surface *fond5; /*!< Surface*/
 }vie;
 
 void initialiservie(vie *vie);
-void affichervie(vie *vie,SDL_Rect *posj , SDL_Rect posobj,SDL_Surface *ecran , int *i);
-int collisionbb( SDL_Rect posj , SDL_Rect posobj );
+void affichervie(vie *vie,SDL_Surface *ecran);
+
 #endif

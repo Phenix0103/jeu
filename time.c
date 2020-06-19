@@ -2,9 +2,25 @@
 
 
 #include"time.h"
+/**
+* @file time.c
+* @brief Testing Program
+* @author f4
+* @version 1.0
+* @date 01-06-2020
+*
+* Testing program for time
+*
+*/
 
+/**
+* @brief To initialize Time time.
+* @param Time time
+* @param url the url of the image
+* @return Nothing
+*/
 void initializerTemps(Time *time){
-
+	TTF_Init();
 	time->font = TTF_OpenFont("font.ttf", 32);
 
 	time->time = 0;
@@ -17,10 +33,15 @@ void initializerTemps(Time *time){
 
 }
 
+/**
+* @brief To show Time time .
+* @param scren screen
+* @param Time time
+* @return Nothing
+*/
 
 
-
-void afficherTemps(Time *time, SDL_Surface **screen){
+void afficherTemps(Time *time, SDL_Surface *screen){
 
 	SDL_Color color = {255,255,255};
 
@@ -34,7 +55,7 @@ void afficherTemps(Time *time, SDL_Surface **screen){
 
 	}
 
-	SDL_BlitSurface(time->msg,NULL,*screen,NULL);
+	SDL_BlitSurface(time->msg,NULL,screen,NULL);
 
 }
 

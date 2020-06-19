@@ -11,10 +11,8 @@
 
 typedef struct 
 {
-
 int X;
 int Y;
-
 }Coordinate;
 
 
